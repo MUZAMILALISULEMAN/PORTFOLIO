@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Muzamil Ali - Software Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="custom-cursor"></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="status-bar">
+      <span class="status-dot"></span>
+      <span>SYSTEM.ONLINE</span>
+    </div>
+    <h1>MUZAMIL ALI</h1>
+    <div class="roles">Engineer • Developer • Security Analyst</div>
+    <div class="tagline">
+      CS @ FAST-NUCES Karachi '28 → Building scalable backend systems, real-time game engines, 
+      intelligent ML pipelines, and security frameworks. Diving deep into network security, 
+      cryptography, and secure architecture. Engineering solutions that execute with precision.
+    </div>
+    <a href="#conti" class="cta-button">Get In Touch</a>
+  </section>
+
+  <!-- ABOUT -->
+  <section>
+    <h2>ABOUT</h2>
+    <div class="about-content">
+      <p>
+        I'm a software engineer specializing in <strong>backend development</strong>, <strong>game systems</strong>, 
+        <strong>machine learning</strong>, and <strong>cybersecurity</strong>. From deploying production APIs to 
+        building multiplayer game engines and conducting security assessments—I create systems that scale and perform.
+      </p>
+      <p>
+        Currently expanding into <strong>network security</strong>, <strong>penetration testing</strong>, 
+        and <strong>secure coding practices</strong>. Whether it's implementing authentication systems, 
+        analyzing network traffic, or building encrypted protocols—I focus on solutions that are both powerful and secure.
+      </p>
+    </div>
+  </section>
+  <!-- GITHUB ACTIVITY -->
+<section>
+  <h2>GITHUB ACTIVITY</h2>
+  <div class="github-stats-container">
+    <div class="grid">
+      <div class="card github-stat-card">
+        <strong>Top Languages</strong>
+        <div class="languages-grid" id="topLanguages">
+          <div class="loading">Analyzing code...</div>
+        </div>
+        <div class="card-content">Most used across repos</div>
+      </div>
+      <div class="card github-stat-card">
+        <strong>Recent Activity</strong>
+        <div class="commit-stats" id="commitStats">
+          <div class="loading">Checking commits...</div>
+        </div>
+        <div class="card-content">Last 30 days</div>
+      </div>
+      <div class="card github-stat-card">
+        <strong>Top Repository</strong>
+        <div class="top-repo" id="topRepo">
+          <div class="loading">Finding stars...</div>
+        </div>
+        <div class="card-content">Most starred project</div>
+      </div>
+      <div class="card github-stat-card">
+        <strong>Code Frequency</strong>
+        <div class="frequency-stats" id="frequencyStats">
+          <div class="loading">Tracking rhythm...</div>
+        </div>
+        <div class="card-content">Your coding pattern</div>
+      </div>
+    </div>
+    <div class="github-status">
+      <span class="status-dot" id="githubStatusDot"></span>
+      <span id="githubStatus">SYNCING WITH GITHUB...</span>
+      <span class="cache-timer" id="cacheTimer"></span>
+    </div>
+  </div>
+</section>
+  <!-- STACK -->
+  <section>
+    <h2>TECH STACK</h2>
+    <div class="grid">
+      <div class="card">
+        <strong>Languages</strong>
+        <div class="card-content">Python • C++ • JavaScript • C • SQL • Bash</div>
+      </div>
+      <div class="card">
+        <strong>Frameworks</strong>
+        <div class="card-content">FastAPI • Pydantic • Raylib • SQLAlchemy • TextBlob • Hashing • Encrption</div>
+      </div>
+      <div class="card">
+        <strong>Infrastructure</strong>
+        <div class="card-content">Render • Vercel • Git • MySQL • SQLite • VSCode • Linux</div>
+      </div>
+      <div class="card">
+        <strong>Security & Network</strong>
+        <div class="card-content">Web Request • DNS • Nmap • Burp Suite • TCP/IP • SSL/TLS</div>
+      </div>
+      <div class="card">
+        <strong>Learning Next</strong>
+        <div class="card-content">Pentesting • Web Penetration • React • DevOps • AI Modules</div>
+      </div>
+     <div class="card">
+        <strong>Platforms</strong>
+        <div class="card-content">Leetcode • Github • HackTheBox • TryHackMe • PortSwigger</div>
+      </div> 
+    </div>
+  </section>
+<!-- FEATURED PROJECTS -->
+<section>
+  <h2>FEATURED PROJECTS</h2>
+  <div class="projects-container">
+    
+    <!-- Project 1: Notes Taking App -->
+    <div class="project featured-project">
+      <div class="project-header">
+        <h3><img src="images/notes.png" height="30px"> Notes App</h3>
+        <div class="project-links">
+          <a href="https://github.com/MUZAMILALISULEMAN/NOTE-TAKING-FULL-STACK-APP" target="_blank" class="project-link">Code</a>
+          <a href="https://muzamilalisuleman.github.io/NOTE-TAKING-FULL-STACK-APP/" target="_blank" class="project-link">Live Demo</a>
+          
+        </div>
+      </div>
+      
+      <!-- Centered Square Image -->
+      <div class="project-image-container">
+        <img src="images/i1.jpg" alt="Notes Taking App" class="project-image-square">
+      
+      </div>
+      
+      <div class="project-content">
+        <p>
+          A sleek, full-stack notes management web app with FastAPI + MySQL backend.
+        <div class="project-tech">
+          <span class="tech-tag">FastAPI</span>
+          <span class="tech-tag">MySQL</span>
+          <span class="tech-tag">SQLAlchemy</span>
+          <span class="tech-tag">DevOps</span>
+          <span class="tech-tag">Render</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 2: Weather Masters -->
+    <div class="project featured-project">
+      <div class="project-header">
+        <h3><img src="images/weather.png" height="30px"> Weather Masters</h3>
+        <div class="project-links">
+          <a href="https://github.com/MUZAMILALISULEMAN/Weather-Masters-Simple-Dynamic-Weather-App" target="_blank" class="project-link">Code</a>
+          <a href="https://muzamilalisuleman.github.io/Weather-Masters-Simple-Dynamic-Weather-App/" target="_blank" class="project-link">Live Demo</a>
+        </div>
+      </div>
+      
+      <!-- Centered Square Image -->
+      <div class="project-image-container">
+        <img src="images/i0.jpg" alt="Weather Masters" class="project-image-square">
+    
+      </div>
+      
+      <div class="project-content">
+        <p>
+          A sleek, dynamic weather application providing real-time weather updates worldwide.
+        </p>
+        <div class="project-tech">
+          <span class="tech-tag">JavaScript</span>
+          <span class="tech-tag">API</span>
+          <span class="tech-tag">HTML5</span>
+          <span class="tech-tag">CSS3</span>
+          <span class="tech-tag">OpenWeather</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 3: Emoji Reactor -->
+    <div class="project featured-project">
+      <div class="project-header">
+        <h3><img src="images/face.png" height="30px"> Emoji Reactor</h3>
+        <div class="project-links">
+          <a href="https://github.com/MUZAMILALISULEMAN/EMOJI-REACTION-AI-INTEGRATED" target="_blank" class="project-link">Code</a>
+          <a href="https://muzamilalisuleman.github.io/EMOJI-REACTION-AI-INTEGRATED/" target="_blank" class="project-link">Live Demo</a>
+        </div>
+      </div>
+      
+      <!-- Centered Square Image -->
+      <div class="project-image-container">
+        <img src="images/i2.jpg" alt="Emoji Reactor" class="project-image-square">
+       
+      </div>
+      
+      <div class="project-content">
+        <p>
+          A fun AI-integrated web app that analyzes text sentiment and reacts.
+        </p>
+        <div class="project-tech">
+          <span class="tech-tag">JavaScript</span>
+          <span class="tech-tag">AI</span>
+          <span class="tech-tag">CSS</span>
+          <span class="tech-tag">Interactive</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- OTHER PROJECTS -->
+<section>
+  <h2>OTHER PROJECTS</h2>
+  <div class="other-projects-grid">
+    <div class="other-project-card">
+      <h4>Multiplayer Pong Game</h4>
+      <p>C++ game engine with networking</p>
+      <span class="project-type">Game Development</span>
+      <a href="https://github.com/MUZAMILALISULEMAN/Pong-OOP" target="_blank" class="project-type">Check Out</a>
+    </div>
+    <div class="other-project-card">
+      <h4>Production CRUD API</h4>
+      <p>FastAPI backend with JWT authentication</p>
+      <span class="project-type">Backend</span>
+      <a href="https://github.com/MUZAMILALISULEMAN/Simple-User-CRUD-API-FastAPI-SQLite3" target="_blank" class="project-type">Check Out</a>
+    </div>
+    <div class="other-project-card">
+      <h4>OTP Verification<h4>
+      <p>Time Based OTP Verification</p>
+      <span class="project-type">Database</span>
+      <a href="https://github.com/MUZAMILALISULEMAN/OTP-VERIFICATION-APP" target="_blank" class="project-type">Check Out</a>
+    </div>
+    <div class="other-project-card">
+      <h4>Inventory Management System</h4>
+      <p>CLI Based C Management System</p>
+      <span class="project-type">Management</span>
+      <a href="https://github.com/MUZAMILALISULEMAN/Inventory-Management-System-C" target="_blank" class="project-type">Check Out</a> 
+    </div>
+
+    <div class="other-project-card">
+      <h4>Password Vault</h4>
+      <p>AES-256 Encrpted Password Management App<p>
+      <span class="project-type">Security</span>
+      <a href="https://github.com/MUZAMILALISULEMAN/PASSWORD-MANAGER-FULL-STACK-APP" target="_blank" class="project-type" >Check Out</a> 
+    </div>
+
+<div class="other-project-card">
+      <h4>Water Plant Management System</h4>
+      <p>Water Plant Management App<p>
+      <span class="project-type">Full Stack</span>
+      <a href="https://github.com/MUZAMILALISULEMAN/WATER_PLANT_FULL_STACK_APP" target="_blank" class="project-type">Check Out</a> 
+    </div>
+
+  </div>
+  
+</section>
+ 
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="contact-content">
+      <h2>LET'S CONNECT</h2>
+      <p style="color: var(--dim); font-size: 1.1rem; margin-bottom: 2rem;">
+        Open for collaborations, internships, security research, and engineering challenges.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:your.email@gmail.com" class="contact-link">muzamil.workdev@gmail.com</a>
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/MUZAMILALISULEMAN" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/in/Muzamil-Ali" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+ 
+<script src="main.js"></script>
+</body>
+</html>
