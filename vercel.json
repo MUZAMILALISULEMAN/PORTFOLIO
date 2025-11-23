@@ -5,13 +5,14 @@
       "use": "@vercel/python"
     },
     {
-      "src": ".*",
+      "src": "index.html",
       "use": "@vercel/static"
     }
   ],
   "routes": [
-    { "src": "/get_views",           "dest": "api/main.py" },
-    { "src": "/get_leetcode_stats",   "dest": "api/main.py" },
-    { "src": "/(.*)",                 "dest": "/" }
+    { "src": "/get_views", "dest": "api/main.py" },
+    { "src": "/get_leetcode_stats", "dest": "api/main.py" },
+
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
