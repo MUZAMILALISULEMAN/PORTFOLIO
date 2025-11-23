@@ -1,0 +1,17 @@
+{
+  "builds": [
+    {
+      "src": "api/main.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": ".*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    { "src": "/get_views",           "dest": "api/main.py" },
+    { "src": "/get_leetcode_stats",   "dest": "api/main.py" },
+    { "src": "/(.*)",                 "dest": "/" }
+  ]
+}
