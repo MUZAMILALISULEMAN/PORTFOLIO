@@ -5,15 +5,6 @@ import requests
 
 app = FastAPI()
 
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["https://portfolio-tan-two-72.vercel.app"],              # Change to your actual domain later if you want
-    allow_credentials=True,
-    allow_methods=["*"],              # GET, POST, etc.
-    allow_headers=["*"],              # Allows Authorization, Content-Type, etc.
-)
-
 import os
 API_KEY = os.getenv("API_KEY")
 

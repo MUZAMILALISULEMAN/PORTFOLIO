@@ -307,7 +307,7 @@ async function updateViews() {
 
   if (shouldIncrement) {
     try {
-      let res = await fetch("http://127.0.0.1:8000/get_views");
+      let res = await fetch("/get_views");
       let ans  = await res.json();
       if(ans.count == -1){
         document.getElementById("viewCount").innerText = "—";
@@ -360,7 +360,7 @@ async function updateLeetCode() {
 
   if (shouldFetch) {
     try {
-      let res = await fetch(`http://127.0.0.1:8000/get_leetcode_stats`);
+      let res = await fetch(`/get_leetcode_stats`);
       let data = await res.json();
       if(data.data.totalSolved == "undefined"){
         console.log("server issue");
