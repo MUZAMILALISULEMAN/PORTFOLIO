@@ -126,7 +126,7 @@
 
     // Cache management
     getCachedData() {
-      const cached = localStorage.getItem(this.cacheKey);
+      const cached = sessionStorage.getItem(this.cacheKey);
       return cached ? JSON.parse(cached) : null;
     }
 
@@ -135,7 +135,7 @@
         data: data,
         timestamp: Date.now()
       };
-      localStorage.setItem(this.cacheKey, JSON.stringify(cacheData));
+      sessionStorage.setItem(this.cacheKey, JSON.stringify(cacheData));
     }
 
     isCacheExpired(cached) {
@@ -292,7 +292,7 @@ async function updateViews() {
   const VIEW_KEY = "last_view";
   const THIRTY_MINUTES = 30 * 60 * 1000; // 30 minutes in ms
   const now = Date.now();
-  const lastViewed = localStorage.getItem(VIEW_KEY);
+  const lastViewed = sessionStorage.getItem(VIEW_KEY);
 
   let shouldIncrement = false;
 
@@ -314,8 +314,8 @@ async function updateViews() {
         console.log("View count failed (offline?)");
         return;
       }
-      localStorage.setItem("views",ans.count);
-      localStorage.setItem(VIEW_KEY, now.toString());
+      sessionStorage.setItem("views",ans.count);
+      sessionStorage.setItem(VIEW_KEY, now.toString());
       document.getElementById("viewCount").innerText = ans.count;
     }
 
@@ -324,95 +324,63 @@ async function updateViews() {
     }
 
 }else{
-document.getElementById("viewCount").innerText = localStorage.getItem("views");
-console.log("ELSE HERE");
+document.getElementById("viewCount").innerText = sessionStorage.getItem("views");
 
 }
 }
 updateViews();
 
-
-const LEETCODE_CACHE_KEY = "leetcode_stats_cache";
-const LEETCODE_LAST_FETCH_KEY = "leetcode_last_fetch";
-const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes in milliseconds
-
-async function updateLeetCodeStats() {
-  const totalEl = document.getElementById("leetcodeTotal");
-  const easyEl = document.getElementById("easySolved");
-  const mediumEl = document.getElementById("mediumSolved");
-  const hardEl = document.getElementById("hardSolved");
-
-  // If elements don't exist, exit early
-  if (!totalEl || !easyEl || !mediumEl || !hardEl) return;
-
-  const now = Date.now();
-  const lastFetchTime = localStorage.getItem(LEETCODE_LAST_FETCH_KEY);
-  const cachedData = localStorage.getItem(LEETCODE_CACHE_KEY);
-
-  // Show cached data immediately (if any)
-  if (cachedData) {
-    try {
-      const data = JSON.parse(cachedData);
-      displayLeetCodeStats(data);
-    } catch (e) {
-      console.warn("Failed to parse cached LeetCode data");
-    }
-  }
-
-  // Decide whether to fetch fresh data
-  const shouldFetch = !lastFetchTime || (now - parseInt(lastFetchTime)) > CACHE_DURATION;
-
-  if (!shouldFetch) {
-    // Optional: show "cached" indicator or just do nothing
-    return;
-  }
-
-  // Fetch fresh data
-  try {
-    const response = await fetch(`https://alfa-leetcode-api.onrender.com/KYFmk4en0i/solved`);
-    
-    if (!response.ok) throw new Error("Network error");
-
-    const data = await response.json();
-
-    // Save to cache
-    localStorage.setItem(LEETCODE_CACHE_KEY, JSON.stringify(data));
-    localStorage.setItem(LEETCODE_LAST_FETCH_KEY, now.toString());
-
-    displayLeetCodeStats(data);
-  } catch (error) {
-    console.log("LeetCode stats fetch failed:", error);
-
-    // On error: show offline/private message only if no valid cache
-    if (!cachedData) {
-      totalEl.textContent = easyEl.textContent = mediumEl.textContent = hardEl.textContent = "—";
-    }
-  }
-}
-
-// Helper function to update DOM
-function displayLeetCodeStats(data) {
+async function updateLeetCode() {
   
-  const totalEl = document.getElementById("leetcodeTotal");
-  const easyEl = document.getElementById("easySolved");
-  const mediumEl = document.getElementById("mediumSolved");
-  const hardEl = document.getElementById("hardSolved");
+  const LAST_FETCH_KEY = "leetcode_last_fetch";
+  const THIRTY_MINUTES = 30 * 60 * 1000;
+  const now = Date.now();
+  const lastFetched = sessionStorage.getItem(LAST_FETCH_KEY);
 
-  if (data.totalSolved !== undefined) {
-   
-    totalEl.textContent = data.totalSolved;
-    easyEl.textContent = data.easySolved;
-    mediumEl.textContent = data.mediumSolved;
-    hardEl.textContent = data.hardSolved;
-  } else {
-    // Profile is private or doesn't exist
-    usernameEl.textContent = "Private / Not Found";
-    totalEl.textContent = easyEl.textContent = mediumEl.textContent = hardEl.textContent = "—";
+  let shouldFetch = false;
+
+  if (!lastFetched) {
+    shouldFetch = true;
+  } else if (now - parseInt(lastFetched) > THIRTY_MINUTES) {
+    shouldFetch = true;
+  }
+
+  const cached = sessionStorage.getItem("leetcode_data");
+  if (cached) {
+    try {
+      const data = JSON.parse(cached);
+      console.log(data);
+        document.getElementById("leetcodeTotal").innerText = data.data.solvedProblem;
+        document.getElementById("easySolved").innerText = data.data.easySolved;
+        document.getElementById("mediumSolved").innerText = data.data.mediumSolved;
+        document.getElementById("hardSolved").innerText = data.data.hardSolved;
+      
+    } catch(e) {}
+  }
+
+  if (shouldFetch) {
+    try {
+      let res = await fetch(`http://127.0.0.1:8000/get_leetcode_stats`);
+      let data = await res.json();
+      if(data.data.totalSolved == "undefined"){
+        console.log("server issue");
+        return;
+      }
+        // Success — update everything
+      
+        document.getElementById("leetcodeTotal").textContent = data.totalSolved;
+        document.getElementById("easySolved").textContent = data.easySolved;
+        document.getElementById("mediumSolved").textContent = data.mediumSolved;
+        document.getElementById("hardSolved").textContent = data.hardSolved;
+
+        // Cache it
+        sessionStorage.setItem("leetcode_data", JSON.stringify(data));
+        sessionStorage.setItem(LAST_FETCH_KEY, now.toString());
+      }
+     catch(e) {
+      console.log("LeetCode fetch failed (offline?)");
+    }
   }
 }
 
-// Run on page load
-updateLeetCodeStats();
-
-// Optional: refresh every 30+ min automatically (even if tab is open)
-setInterval(updateLeetCodeStats, CACHE_DURATION);
+updateLeetCode();

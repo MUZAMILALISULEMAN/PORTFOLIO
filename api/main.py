@@ -31,3 +31,17 @@ async def getViews():
         return {"count": -1}
     
 
+
+@app.get("/get_leetcode_stats")
+async def stats():
+    try:
+        resp = requests.get(f"https://alfa-leetcode-api.onrender.com/KYFmk4en0i/solved")
+        data= resp.json()
+        # print(data)
+        return {"data": data}
+
+    except Exception as e:
+        print(e)  # optional: see errors in Vercel logs
+        data = {"totalSolved":"undefined"}
+        return {"data": data}
+    
