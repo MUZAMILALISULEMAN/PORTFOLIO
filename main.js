@@ -268,7 +268,6 @@
   // Initialize when page loads
   document.addEventListener('DOMContentLoaded', function() {
     displayGitHubActivity();
-    
     // Your existing cursor and scroll code
     const cursor = document.querySelector('.custom-cursor');
     document.addEventListener('mousemove', (e) => {
@@ -285,7 +284,7 @@
     });
   });
   // ========== HACKER STATS (YOUR COUNTER + LEETCODE) ==========
-
+  
 
 
 async function updateViews() {
@@ -310,7 +309,7 @@ async function updateViews() {
       let res = await fetch("/get_views");
       let ans  = await res.json();
       if(ans.count == -1){
-        document.getElementById("viewCount").innerText = "—";
+        document.getElementById("viewCount").innerText = "150+";
         console.log("View count failed (offline?)");
         return;
       }
@@ -328,59 +327,63 @@ document.getElementById("viewCount").innerText = sessionStorage.getItem("views")
 
 }
 }
-updateViews();
-
 async function updateLeetCode() {
-  
   const LAST_FETCH_KEY = "leetcode_last_fetch";
+  const DATA_KEY = "leetcode_data";
   const THIRTY_MINUTES = 30 * 60 * 1000;
   const now = Date.now();
-  const lastFetched = sessionStorage.getItem(LAST_FETCH_KEY);
 
-  let shouldFetch = false;
-
-  if (!lastFetched) {
-    shouldFetch = true;
-  } else if (now - parseInt(lastFetched) > THIRTY_MINUTES) {
-    shouldFetch = true;
-  }
-
-  const cached = sessionStorage.getItem("leetcode_data");
+  // 1. Try to load from Cache
+  const cached = sessionStorage.getItem(DATA_KEY);
   if (cached) {
     try {
-      const data = JSON.parse(cached);
-      console.log(data);
-        document.getElementById("leetcodeTotal").innerText = data.data.solvedProblem;
-        document.getElementById("easySolved").innerText = data.data.easySolved;
-        document.getElementById("mediumSolved").innerText = data.data.mediumSolved;
-        document.getElementById("hardSolved").innerText = data.data.hardSolved;
-      
-    } catch(e) {}
+      const parsed = JSON.parse(cached);
+      // Only render if the data is actually valid
+      if (parsed && (parsed.solvedProblem || parsed.totalSolved)) {
+        renderLeetCodeUI(parsed);
+      }
+    } catch (e) {
+      console.error("LeetCode cache error");
+    }
   }
 
-  if (shouldFetch) {
+  // 2. Decide if we need to fetch fresh data
+  const lastFetched = sessionStorage.getItem(LAST_FETCH_KEY);
+  if (!lastFetched || (now - parseInt(lastFetched) > THIRTY_MINUTES)) {
     try {
-      let res = await fetch(`/get_leetcode_stats`);
-      let data = await res.json();
-      if(data.data.totalSolved == "undefined"){
-        console.log("server issue");
-        return;
-      }
-        // Success — update everything
+      const res = await fetch(`/get_leetcode_stats`);
+      const result = await res.json();
       
-        document.getElementById("leetcodeTotal").textContent = data.totalSolved;
-        document.getElementById("easySolved").textContent = data.easySolved;
-        document.getElementById("mediumSolved").textContent = data.mediumSolved;
-        document.getElementById("hardSolved").textContent = data.hardSolved;
+      // Your FastAPI returns {"data": {...}}
+      const freshData = result.data;
 
-        // Cache it
-        sessionStorage.setItem("leetcode_data", JSON.stringify(data));
+      // GUARD: Only update if the API gave us real numbers
+      if (freshData && freshData.solvedProblem && freshData.solvedProblem !== "undefined") {
+        renderLeetCodeUI(freshData);
+        sessionStorage.setItem(DATA_KEY, JSON.stringify(freshData));
         sessionStorage.setItem(LAST_FETCH_KEY, now.toString());
       }
-     catch(e) {
-      console.log("LeetCode fetch failed (offline?)");
+    } catch (e) {
+      console.log("LeetCode sync failed - keeping fallbacks");
     }
   }
 }
 
-updateLeetCode();
+// 3. SEPARATE RENDERING LOGIC (The Safety Net)
+function renderLeetCodeUI(data) {
+  const total = document.getElementById("leetcodeTotal");
+  const easy = document.getElementById("easySolved");
+  const med = document.getElementById("mediumSolved");
+  const hard = document.getElementById("hardSolved");
+
+  // Only update if elements exist and data is not 'undefined'
+  if (total && data.solvedProblem) {
+    // We use totalSolved OR solvedProblem depending on which one the API sent
+    total.textContent = data.solvedProblem || data.totalSolved;
+    easy.textContent = data.easySolved;
+    med.textContent = data.mediumSolved;
+    hard.textContent = data.hardSolved;
+  }
+}
+  updateViews();
+  updateLeetCode();
