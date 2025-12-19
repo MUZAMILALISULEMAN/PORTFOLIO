@@ -232,7 +232,7 @@
     if (!container || !repo.name) return;
     
     container.innerHTML = `
-      <div class="repo-name">${repo.name}</div>
+      <div class="repo-name">${repo.name || "DSA-PROJECT" }</div>
       <div class="repo-details">
         <span class="repo-stat">⭐ ${repo.stargazers_count || 0}</span>
         <span class="repo-stat">🍴 ${repo.forks_count || 0}</span>
@@ -260,8 +260,8 @@
     if (!container) return;
     
     container.innerHTML = `
-      <div class="frequency-level">${stats.level}</div>
-      <div class="frequency-desc">${stats.description}</div>
+      <div class="frequency-level">${stats.level || "MODERATE"}</div>
+      <div class="frequency-desc">${stats.description || "Regular"}</div>
     `;
   }
 
@@ -387,3 +387,12 @@ function renderLeetCodeUI(data) {
 }
   updateViews();
   updateLeetCode();
+function copyEmail() {
+  const email = "muzamil.workdev@gmail.com";
+  navigator.clipboard.writeText(email);
+  
+  // Optional: Visual feedback
+  const btn = document.querySelector('.copy-btn');
+  btn.style.color = 'var(--accent-3)';
+  setTimeout(() => { btn.style.color = 'var(--dim)'; }, 1000);
+}
