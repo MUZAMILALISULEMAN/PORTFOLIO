@@ -396,3 +396,24 @@ function copyEmail() {
   btn.style.color = 'var(--accent-3)';
   setTimeout(() => { btn.style.color = 'var(--dim)'; }, 1000);
 }
+function handleResponsiveUI() {
+    const roleElement = document.getElementById('hero-roles');
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    if (roleElement) {
+        // Condition matches our CSS: If narrow OR short
+        if (width < 1025 || height < 600) {
+            roleElement.textContent = "Full-Stack • Backend • Systems";
+        } else {
+            roleElement.textContent = "Full-Stack Developer • Backend Specialist • Systems Builder";
+        }
+    }
+}
+
+// Initialize listeners
+window.addEventListener('load', handleResponsiveUI);
+window.addEventListener('resize', handleResponsiveUI);
+
+// Clean up: We remove the menuToggle click listeners because 
+// the bottom nav is always visible for better UX.
